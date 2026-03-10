@@ -1,0 +1,61 @@
+
+###################################################################
+
+server:
+  address: 0.0.0.0
+  port: 8763
+
+spring:
+  application:
+    name: metadata-service
+
+  security:
+    user:
+      name: admin
+      password: admin123
+      roles: ADMIN
+
+  datasource:
+    url: jdbc:mysql://ballast.proxy.rlwy.net:37143/railway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: ${DB_PASSWORD:usWWjahOWNcwHppqrsESYhBVXplBvJDI}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  cache:
+    type: none
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+eureka:
+  client:
+    service-url:
+      defaultZone: https://microservice-6dyb.onrender.com/eureka # Trỏ tới Eureka Server
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    prefer-ip-address: true
+
+metadata:
+  key:
+    pattern: "^[a-zA-Z_][a-zA-Z0-9_.]*$"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
