@@ -17,7 +17,7 @@ RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
 COPY src ./src
 
 # Build, skip tests (tests require DB connection)
-RUN ./mvnw package -DskipTests -B
+RUN ./mvnw package -Dmaven.test.skip=true -B
 
 # ================================
 # Stage 2: Runtime
