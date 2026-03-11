@@ -1,5 +1,9 @@
 package com.group1.metadataservice.service;
 
+import com.group1.metadataservice.infrastructure.StaffClient;
+import com.group1.metadataservice.model.FranchiseDto;
+import com.group1.metadataservice.model.dto.FranchiseWithStaffResponse;
+import com.group1.metadataservice.model.dto.StaffWithFranchisesResponse;
 import com.group1.metadataservice.model.entity.FranchiseStaff;
 import com.group1.metadataservice.model.entity.franchise.Franchise;
 import com.group1.metadataservice.repository.FranchiseStaffRepository;
@@ -10,16 +14,17 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
-@Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Service
 @Transactional
 public class FranchiseStaffService {
 
-    FranchiseStaffRepository franchiseStaffRepository;
-    FranchiseRepository franchiseRepository;
+    private final FranchiseStaffRepository franchiseStaffRepository;
+    private final FranchiseRepository franchiseRepository;
+    private final StaffClient staffClient;
 
     public FranchiseStaff saveStaff(UUID franchiseId, String staffId) {
         Franchise franchise = franchiseRepository.findById(franchiseId)
@@ -29,13 +34,31 @@ public class FranchiseStaffService {
         staff.setStaffId(staffId);
         staff.setFranchise(franchise);
 
-        // Đã sửa: Sử dụng đúng repository cho FranchiseStaff
         return franchiseStaffRepository.save(staff);
     }
 
     @Transactional(readOnly = true)
-    public FranchiseStaff getByFranchiseId(UUID franchiseId) {
-        return franchiseStaffRepository.findByFranchiseId(franchiseId)
-                .orElseThrow(() -> new RuntimeException("Staff not found for this franchise"));
+    public StaffWithFranchisesResponse getFranchiseByStaffId(String staffId) {
+
+        List<FranchiseStaff> mappings =
+                franchiseStaffRepository.findAllByStaffId(staffId);
+
+        if (mappings.isEmpty()) {
+            throw new RuntimeException("Mapping not found");
+        }
+
+        List<FranchiseDto> franchises = mappings.stream()
+                .map(FranchiseStaff::getFranchise)
+                .map(FranchiseDto::from)
+                .toList();
+
+        var staffDetail = staffClient.getStaffById(staffId);
+
+        return new StaffWithFranchisesResponse(staffDetail, franchises);
+    }
+
+    @Transactional(readOnly = true)
+    public List<FranchiseStaff> getAllByFranchiseId(UUID franchiseId) {
+        return franchiseStaffRepository.findAllByFranchiseId(franchiseId);
     }
 }

@@ -1,5 +1,6 @@
 package com.group1.metadataservice.model.entity.franchise;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.group1.metadataservice.infrastructure.persistence.base.BaseEntity;
 import com.group1.metadataservice.model.entity.FranchiseStaff;
 import com.group1.metadataservice.model.entity.brand.Brand;
@@ -53,6 +54,7 @@ public class Franchise extends BaseEntity {
     private Brand brand;
 
     @OneToMany(mappedBy = "franchise", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<FranchiseStaff> franchiseStaffs;
 
 }

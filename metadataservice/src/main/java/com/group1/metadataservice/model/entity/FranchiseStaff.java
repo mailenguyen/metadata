@@ -1,6 +1,7 @@
 package com.group1.metadataservice.model.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.group1.metadataservice.infrastructure.persistence.base.BaseEntity;
 import com.group1.metadataservice.model.entity.brand.Brand;
 import com.group1.metadataservice.model.entity.franchise.Franchise;
@@ -19,8 +20,9 @@ import lombok.experimental.SuperBuilder;
 public class FranchiseStaff extends BaseEntity {
 
     @Column(nullable = false)
-    private String StaffId;
+    private String staffId;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;

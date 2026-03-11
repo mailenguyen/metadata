@@ -72,7 +72,7 @@ public class FranchiseServiceImpl implements FranchiseService {
                         .franchiseId(franchise.getId())
                         .fieldChanged("CREATION")
                         .oldValue(null)
-                        .newValue(franchise.toString())
+                        .newValue("Franchise created: " + franchise.getFranchiseCode())
                         .changedBy(franchise.getCreatedBy())
                         .timestamp(LocalDateTime.now())
                         .build()
