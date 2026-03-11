@@ -16,9 +16,9 @@ spring:
       roles: ADMIN
 
   datasource:
-    url: jdbc:mysql://ballast.proxy.rlwy.net:37143/railway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    url: jdbc:mysql:mainline.proxy.rlwy.net:16570/railway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root
-    password: ${DB_PASSWORD:usWWjahOWNcwHppqrsESYhBVXplBvJDI}
+    password: ${DB_PASSWORD:eaXtdvmmNvEkfyuSqwRsBUGlPqXGPAIN}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
