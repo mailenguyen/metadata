@@ -44,11 +44,13 @@ springdoc:
 eureka:
   client:
     service-url:
-      defaultZone: https://microservice-6dyb.onrender.com/eureka # Trỏ tới Eureka Server
+      defaultZone: https://microservice-6dyb.onrender.com/eureka
     fetch-registry: true
     register-with-eureka: true
+
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${server.port}
 
 metadata:
   key:
