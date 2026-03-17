@@ -24,7 +24,7 @@ WORKDIR /app
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-COPY --from=build /app/target/metadataservice-*.jar app.jar
+COPY --from=build /app/target/metadataservice-1.0.0.jar app.jar
 
 RUN chown appuser:appgroup app.jar
 
