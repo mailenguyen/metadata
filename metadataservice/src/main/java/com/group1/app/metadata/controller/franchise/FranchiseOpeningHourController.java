@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/franchise-service/opening-hour")
+@RequestMapping("/api/metadata/franchise-service/opening-hour")
 @RequiredArgsConstructor
 public class FranchiseOpeningHourController {
 

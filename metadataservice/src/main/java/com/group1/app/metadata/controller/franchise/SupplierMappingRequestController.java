@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/franchise-service/{franchiseId}/supplier-requests")
+@RequestMapping("/api/metadata/franchise-service/{franchiseId}/supplier-requests")
 @RequiredArgsConstructor
 public class SupplierMappingRequestController {
 

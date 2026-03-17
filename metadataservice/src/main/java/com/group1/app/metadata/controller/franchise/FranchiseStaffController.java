@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/franchise-service/franchise-staff")
+@RequestMapping("/api/metadata/franchise-service/franchise-staff")
 @RequiredArgsConstructor
 public class FranchiseStaffController {
 

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/franchise-service/franchises")
+@RequestMapping("/api/metadata/franchise-service/franchises")
 @RequiredArgsConstructor
 public class FranchiseController {
 

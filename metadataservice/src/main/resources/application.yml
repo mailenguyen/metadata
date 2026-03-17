@@ -23,6 +23,8 @@ eureka:
   client:
     service-url:
       defaultZone: ${EUREKA_DEFAULT_ZONE}
+      fetch-registry: true
+      register-with-eureka: true
 
 metadata:
   key:
