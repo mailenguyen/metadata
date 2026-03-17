@@ -13,7 +13,7 @@ RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
 
 COPY src ./src
 
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -Dmaven.test.skip=true
 
 # ================================
 # Stage 2: Runtime
