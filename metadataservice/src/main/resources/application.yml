@@ -26,7 +26,6 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
   instance:
-    # Avoid registering ephemeral container hostnames that other services cannot resolve.
     hostname: ${EUREKA_INSTANCE_HOSTNAME:${RENDER_EXTERNAL_HOSTNAME:localhost}}
     prefer-ip-address: false
     non-secure-port: ${PORT:8123}

@@ -1,9 +1,8 @@
 package com.group1.app.shift.controller;
 
+import com.group1.app.common.response.ApiResponse;
 import com.group1.app.shift.dto.request.AttendanceItemRequest;
 import com.group1.app.shift.dto.request.BulkMarkAttendanceRequest;
-import com.group1.app.shift.dto.response.ApiResponse;
-import com.group1.app.shift.dto.response.AttendanceReportResponse;
 import com.group1.app.shift.dto.response.AttendanceResponse;
 import com.group1.app.shift.dto.response.DashboardOverviewResponse;
 import com.group1.app.shift.service.AttendanceService;
@@ -29,8 +28,9 @@ public class AttendanceController {
     @GetMapping
     public ApiResponse<List<AttendanceResponse>> getByShift(@PathVariable String shiftId) {
         return ApiResponse.<List<AttendanceResponse>>builder()
+                .success(true)
                 .message("Attendance retrieved successfully")
-                .result(attendanceService.getAttendanceByShift(shiftId))
+                .data(attendanceService.getAttendanceByShift(shiftId))
                 .build();
     }
 
@@ -41,8 +41,9 @@ public class AttendanceController {
             @RequestBody @Valid BulkMarkAttendanceRequest request,
             @RequestHeader(value = "USER", defaultValue = "admin_01") String markedBy) {
         return ApiResponse.<List<AttendanceResponse>>builder()
+                .success(true)
                 .message("Attendance marked successfully")
-                .result(attendanceService.bulkMarkAttendance(shiftId, request, markedBy))
+                .data(attendanceService.bulkMarkAttendance(shiftId, request, markedBy))
                 .build();
     }
 
@@ -53,8 +54,9 @@ public class AttendanceController {
             @RequestBody @Valid AttendanceItemRequest request,
             @RequestHeader(value = "USER", defaultValue = "admin_01") String updatedBy) {
         return ApiResponse.<AttendanceResponse>builder()
+                .success(true)
                 .message("Attendance updated successfully")
-                .result(attendanceService.updateAttendance(attendanceId, request, updatedBy))
+                .data(attendanceService.updateAttendance(attendanceId, request, updatedBy))
                 .build();
     }
 
@@ -64,7 +66,8 @@ public class AttendanceController {
             date = LocalDate.now(ZoneId.of("Asia/Ho_Chi_Minh"));
         }
         return ApiResponse.<DashboardOverviewResponse>builder()
-                .result(attendanceService.getDashboardOverview(date))
+                .success(true)
+                .data(attendanceService.getDashboardOverview(date))
                 .build();
     }
 

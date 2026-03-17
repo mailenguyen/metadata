@@ -1,6 +1,6 @@
 package com.group1.app.shift.controller;
 
-import com.group1.app.shift.dto.response.ApiResponse;
+import com.group1.app.common.response.ApiResponse;
 import com.group1.app.shift.dto.response.AttendanceReportResponse;
 import com.group1.app.shift.dto.response.DashboardOverviewResponse;
 import com.group1.app.shift.service.AttendanceService;
@@ -37,8 +37,9 @@ public class AttendanceReportController {
         int targetYear = (year != null) ? year : now.getYear();
 
         return ApiResponse.<List<AttendanceReportResponse>>builder()
+                .success(true)
                 .message("Lấy báo cáo chuyên cần thành công")
-                .result(attendanceService.getAttendanceReport(targetMonth, targetYear))
+                .data(attendanceService.getAttendanceReport(targetMonth, targetYear))
                 .build();
     }
 
@@ -55,8 +56,9 @@ public class AttendanceReportController {
         }
 
         return ApiResponse.<DashboardOverviewResponse>builder()
+                .success(true)
                 .message("Lấy dữ liệu Dashboard thành công")
-                .result(attendanceService.getDashboardOverview(date))
+                .data(attendanceService.getDashboardOverview(date))
                 .build();
     }
 
@@ -68,8 +70,9 @@ public class AttendanceReportController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate exactDate) {
 
         return ApiResponse.<List<com.group1.app.shift.dto.response.StaffAttendanceDetailsResponse>>builder()
+                .success(true)
                 .message("Lấy lịch sử nhân viên thành công")
-                .result(attendanceService.getStaffAttendanceHistory(staffId, month, year, exactDate))
+                .data(attendanceService.getStaffAttendanceHistory(staffId, month, year, exactDate))
                 .build();
     }
 }

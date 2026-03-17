@@ -3,7 +3,7 @@ package com.group1.app.shift.controller;
 import com.group1.app.shift.dto.request.ShiftAssignmentRequest;
 import com.group1.app.shift.dto.request.ShiftCreateRequest;
 import com.group1.app.shift.dto.request.ShiftUpdateRequest;
-import com.group1.app.shift.dto.response.ApiResponse;
+import com.group1.app.common.response.ApiResponse;
 import com.group1.app.shift.dto.response.ShiftResponse;
 import com.group1.app.shift.dto.response.StaffResponse;
 import com.group1.app.shift.service.ShiftService;
@@ -33,9 +33,9 @@ public class ShiftController {
             @RequestBody @Valid ShiftCreateRequest request,
             @RequestHeader(value = "USER", defaultValue = "admin_01") String user) {
         return ApiResponse.<ShiftResponse>builder()
-                .code(201)
+                .success(true)
                 .message("Shift created successfully")
-                .result(shiftService.createShift(request, user))
+                .data(shiftService.createShift(request, user))
                 .build();
     }
 
@@ -48,25 +48,25 @@ public class ShiftController {
 
         if (date != null) {
             return ApiResponse.<List<ShiftResponse>>builder()
-                    .code(200)
+                    .success(true)
                     .message("Fetch shifts by date successfully")
-                    .result(shiftService.getShiftsByDate(date))
+                    .data(shiftService.getShiftsByDate(date))
                     .build();
         }
 
         return ApiResponse.<Page<ShiftResponse>>builder()
-                .code(200)
+                .success(true)
                 .message("Fetch shifts successfully")
-                .result(shiftService.getAllShifts(page, size))
+                .data(shiftService.getAllShifts(page, size))
                 .build();
     }
 
     @GetMapping("/{id}")
     public ApiResponse<ShiftResponse> getShiftById(@PathVariable String id) {
         return ApiResponse.<ShiftResponse>builder()
-                .code(200)
+                .success(true)
                 .message("Fetch shift details successfully")
-                .result(shiftService.getShiftById(id))
+                .data(shiftService.getShiftById(id))
                 .build();
     }
 
@@ -76,9 +76,9 @@ public class ShiftController {
             @RequestBody @Valid ShiftUpdateRequest request,
             @RequestHeader(value = "USER", defaultValue = "admin_01") String user) {
         return ApiResponse.<ShiftResponse>builder()
-                .code(200)
+                .success(true)
                 .message("Shift updated successfully")
-                .result(shiftService.updateShift(id, request, user))
+                .data(shiftService.updateShift(id, request, user))
                 .build();
     }
 
@@ -86,7 +86,7 @@ public class ShiftController {
     public ApiResponse<Void> deleteShift(@PathVariable String id) {
         shiftService.deleteShift(id);
         return ApiResponse.<Void>builder()
-                .code(200)
+                .success(true)
                 .message("Shift deleted successfully")
                 .build();
     }
@@ -95,9 +95,9 @@ public class ShiftController {
     public ApiResponse<List<StaffResponse>> getStaffByShift(
             @PathVariable String shiftId) {
         return ApiResponse.<List<StaffResponse>>builder()
-                .code(200)
+                .success(true)
                 .message("Fetch staff by shift successfully")
-                .result(shiftService.getStaffByShift(shiftId))
+                .data(shiftService.getStaffByShift(shiftId))
                 .build();
     }
     @PostMapping("/{shiftId}/assign")
@@ -108,7 +108,7 @@ public class ShiftController {
         shiftService.assignStaffToShift(shiftId, request.getStaffId(), assignedBy);
 
         return ApiResponse.<Void>builder()
-                .code(200)
+                .success(true)
                 .message("Đã gán nhân viên vào ca thành công!")
                 .build();
     }

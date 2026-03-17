@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -38,16 +36,25 @@ public class GlobalExceptionHandler {
 
     // ---- Shift domain exceptions ----
     @ExceptionHandler(AppException.class)
-    public ResponseEntity<com.group1.app.shift.dto.response.ApiResponse<Object>> handleAppException(AppException ex) {
-        Map<String, Object> body = new HashMap<>();
-        if (ex.getErrors() != null) {
-            body.putAll(ex.getErrors());
-        }
+    public ResponseEntity<ApiResponse<?>> handleAppException(AppException ex, HttpServletRequest req) {
+        String detail = ex.getErrors() != null && !ex.getErrors().isEmpty()
+                ? ex.getErrors().entrySet().stream()
+                .map(e -> e.getKey() + ": " + e.getValue())
+                .collect(Collectors.joining("; "))
+                : ex.getMessage();
+
+        ApiError error = ApiError.builder()
+                .code(String.valueOf(ex.getErrorCode().getCode()))
+                .message(detail)
+                .path(req.getRequestURI())
+                .build();
+
         return ResponseEntity.status(ex.getErrorCode().getHttpStatus())
-                .body(com.group1.app.shift.dto.response.ApiResponse.builder()
-                        .code(ex.getErrorCode().getCode())
+                .body(ApiResponse.<Object>builder()
+                        .success(false)
                         .message(ex.getMessage())
-                        .result(ex.getErrors())
+                        .error(error)
+                        .timestamp(Instant.now())
                         .build());
     }
 

@@ -1,7 +1,7 @@
 package com.group1.app.shift.controller;
 
+import com.group1.app.common.response.ApiResponse;
 import com.group1.app.shift.dto.request.StaffScheduleRequest;
-import com.group1.app.shift.dto.response.ApiResponse;
 import com.group1.app.shift.dto.response.StaffScheduleResponse;
 import com.group1.app.shift.dto.response.StaffScheduleWithAttendanceResponse;
 import com.group1.app.shift.service.StaffScheduleService;
@@ -24,14 +24,16 @@ public class StaffScheduleController {
     @GetMapping("/staff/{staffId}/schedules")
     public ApiResponse<List<StaffScheduleResponse>> getSchedulesByStaff(@PathVariable String staffId) {
         return ApiResponse.<List<StaffScheduleResponse>>builder()
-                .result(staffScheduleService.getSchedulesByStaffId(staffId))
+                .success(true)
+                .data(staffScheduleService.getSchedulesByStaffId(staffId))
                 .build();
     }
 
     @GetMapping("/staff-schedules/{staffId}")
     public ApiResponse<List<StaffScheduleWithAttendanceResponse>> getSchedulesWithAttendance(@PathVariable String staffId) {
         return ApiResponse.<List<StaffScheduleWithAttendanceResponse>>builder()
-                .result(staffScheduleService.getSchedulesWithAttendance(staffId))
+                .success(true)
+                .data(staffScheduleService.getSchedulesWithAttendance(staffId))
                 .build();
     }
 
@@ -42,8 +44,9 @@ public class StaffScheduleController {
         // ensure path staffId matches payload
         if (request.getStaffId() == null) request.setStaffId(staffId);
         return ApiResponse.<StaffScheduleResponse>builder()
+                .success(true)
                 .message("Schedule created")
-                .result(staffScheduleService.createSchedule(request))
+                .data(staffScheduleService.createSchedule(request))
                 .build();
     }
 
@@ -52,14 +55,15 @@ public class StaffScheduleController {
             @PathVariable String scheduleId,
             @RequestBody @Valid StaffScheduleRequest request) {
         return ApiResponse.<StaffScheduleResponse>builder()
+                .success(true)
                 .message("Schedule updated")
-                .result(staffScheduleService.updateSchedule(scheduleId, request))
+                .data(staffScheduleService.updateSchedule(scheduleId, request))
                 .build();
     }
 
     @DeleteMapping("/schedules/{scheduleId}")
     public ApiResponse<Void> deleteSchedule(@PathVariable String scheduleId) {
         staffScheduleService.deleteSchedule(scheduleId);
-        return ApiResponse.<Void>builder().message("Schedule deleted").build();
+        return ApiResponse.<Void>builder().success(true).message("Schedule deleted").build();
     }
 }
