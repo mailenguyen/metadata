@@ -3,22 +3,17 @@
 # ================================
 FROM eclipse-temurin:17-jdk-alpine AS build
 
-WORKDIR /build
+WORKDIR /app
 
-# copy maven wrapper
 COPY mvnw mvnw.cmd ./
 COPY .mvn .mvn
-COPY pom.xml .
+COPY pom.xml ./
 
-# download dependency trước để tận dụng docker cache
-RUN chmod +x mvnw && ./mvnw -B -q -e -DskipTests dependency:go-offline
+RUN chmod +x mvnw && ./mvnw dependency:go-offline -B
 
-# copy source
 COPY src ./src
 
-# build jar
-RUN ./mvnw -B -DskipTests package
-
+RUN ./mvnw clean package -Dmaven.test.skip=true
 
 # ================================
 # Stage 2: Runtime
@@ -27,16 +22,14 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# tạo user không phải root (best practice production)
-RUN addgroup -S spring && adduser -S spring -G spring
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-USER spring
+COPY --from=build /app/target/metadataservice-0.0.1-SNAPSHOT.jar app.jar
 
-# copy jar từ stage build
-COPY --from=build /build/target/metadataservice-0.0.1-SNAPSHOT.jar app.jar
+RUN chown appuser:appgroup app.jar
 
-# port service của bạn
-EXPOSE 8763
+USER appuser
 
-# JVM tối ưu cho container
-ENTRYPOINT ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=75.0","-jar","app.jar"]
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","app.jar"]
