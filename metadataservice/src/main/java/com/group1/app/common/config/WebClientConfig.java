@@ -10,16 +10,7 @@ public class WebClientConfig {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("https://microservice-1-7foh.onrender.com")
-                .build();
-    }
-
-    @Bean
-    public WebClient warehouseWebClient(
-            @org.springframework.beans.factory.annotation.Value("${internal.services.warehouse-service:http://localhost:8085}") String warehouseServiceUrl
-    ) {
-        return WebClient.builder()
-                .baseUrl(warehouseServiceUrl)
+                .baseUrl("https://api-gate-waya-ver2.onrender.com")
                 .build();
     }
 
