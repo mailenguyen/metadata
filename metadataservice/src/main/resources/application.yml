@@ -3,7 +3,7 @@
 
 server:
   address: 0.0.0.0
-  port: 8763
+  port: ${PORT:8763}
 
 spring:
   application:
@@ -69,17 +69,13 @@ eureka:
 
   instance:
     prefer-ip-address: false
-    hostname: e29c-2405-4803-db31-3530-69c4-e0cc-6238-ce0c.ngrok-free.app
 
     instance-id: metadata-service:${random.value}
 
     secure-port-enabled: true
     non-secure-port-enabled: false
     secure-port: 443
-  
-    home-page-url: https://e29c-2405-4803-db31-3530-69c4-e0cc-6238-ce0c.ngrok-free.app/
-    status-page-url: https://e29c-2405-4803-db31-3530-69c4-e0cc-6238-ce0c.ngrok-free.app/actuator/info
-    health-check-url: https://e29c-2405-4803-db31-3530-69c4-e0cc-6238-ce0c.ngrok-free.app/actuator/health
+
 
 metadata:
   key:
