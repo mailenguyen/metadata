@@ -25,13 +25,13 @@ eureka:
       defaultZone: ${EUREKA_DEFAULT_ZONE}
     fetch-registry: true
     register-with-eureka: true
+
   instance:
-    hostname: ${EUREKA_INSTANCE_HOSTNAME:${RENDER_EXTERNAL_HOSTNAME:localhost}}
-    prefer-ip-address: false
-    non-secure-port: ${PORT:8123}
-    non-secure-port-enabled: true
-    secure-port-enabled: false
-    instance-id: ${spring.application.name}:${eureka.instance.hostname}:${server.port}
+    hostname: ${RENDER_EXTERNAL_HOSTNAME}
+    secure-port: 443
+    secure-port-enabled: true
+    non-secure-port-enabled: false
+    instance-id: ${spring.application.name}:${RENDER_EXTERNAL_HOSTNAME}
 
 metadata:
   key:
