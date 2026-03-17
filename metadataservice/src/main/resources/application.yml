@@ -3,6 +3,9 @@ server:
   port: ${PORT:8763}
 
 spring:
+  application:
+    name: metadata-service
+
   data:
     redis:
       url: ${REDIS_URL}
