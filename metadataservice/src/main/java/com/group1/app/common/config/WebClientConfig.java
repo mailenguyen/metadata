@@ -10,7 +10,7 @@ public class WebClientConfig {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("https://api-gate-waya-ver2.onrender.com")
+                .baseUrl("https://api-gate-way.onrender.com")
                 .build();
     }
 
