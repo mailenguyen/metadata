@@ -27,7 +27,7 @@ eureka:
     register-with-eureka: true
 
   instance:
-    hostname: ${RENDER_EXTERNAL_HOSTNAME:localhost}
+    hostname: metadata-service.onrender.com
     secure-port-enabled: true
     instance-id: ${spring.application.name}:${RENDER_EXTERNAL_HOSTNAME:localhost}
 

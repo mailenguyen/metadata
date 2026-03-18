@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Duration;
+
 @Component
 @RequiredArgsConstructor
 public class WarehouseClient {
@@ -17,9 +19,11 @@ public class WarehouseClient {
                     .uri("/api/warehouse-service/warehouses/{id}", warehouseId)
                     .retrieve()
                     .bodyToMono(JsonNode.class)
+                    .timeout(Duration.ofSeconds(3)) // ✅ thêm timeout
                     .block();
         } catch (Exception e) {
-            return null;
+            System.err.println("Warehouse call failed: " + e.getMessage());
+            return null; // (tạm chấp nhận)
         }
     }
 }
